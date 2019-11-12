@@ -18,6 +18,20 @@ public class Article {
 	/**記事に対するコメント*/
 	private List<Comment> commentList;
 	
+	
+	public Article() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Article(int id, String name, String content, List<Comment> commentList) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.content = content;
+		this.commentList = commentList;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

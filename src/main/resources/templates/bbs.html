@@ -8,9 +8,11 @@
 	<h1>掲示板アプリケーション</h1>
 	<div>
 		<form th:action="@{/article/insert}" method="post" th:object="${articleForm}">
-			投稿者名:<input type="text" name="name"><br> 
+		<div th:errors="*{name}" style="color:red">エラー!</div>
+			投稿者名:<input type="text" name="name" th:field="*{name}"><br> 
+			<div th:errors="*{content}" style="color:red">エラー!</div>
 			投稿内容:<br>
-			<textarea rows="3" cols="30" name="content"></textarea>
+			<textarea rows="3" cols="30" name="content" th:field="*{content}"></textarea>
 			<br>
 			<button>記事投稿</button>
 		</form>
@@ -23,18 +25,19 @@
 		投稿ID:<span th:text="${article.id}"></span><br> 
 		投稿者名:<span th:text="${article.name}"></span><br> 
 		投稿内容:<span th:text="${article.content}"></span><br>
-		<form>
-			<button>記事削除</button>
-		</form>
+		
+		<a th:href="@{'/article/delete-article?id=' + ${article.id}}"><button>記事削除</button></a>
 		<div th:each="comment:${article.commentList}">
 			名前:<span th:text="${comment.name}"></span><br>
 			コメント:<span th:text="${comment.content}"></span><br>
 		</div>
 		
 		<form th:action="@{/article/insert-comment}" method="post" th:object="${commentForm}">
-			名前:<input type="text" name="name"><br>
+		<div th:errors="*{name}" style="color:red">エラー!</div>
+			名前:<input type="text" name="name" th:field="*{name}"><br>
+			<div th:errors="*{content}" style="color:red">エラー!</div>
 			コメント:<br>
-			<textarea rows="3" cols="55" name="content"></textarea><br>
+			<textarea rows="3" cols="55" name="content" th:field="*{content}"></textarea><br>
 			<input type="hidden" name="articleId" th:value="${article.id}">
 			<button>コメント投稿</button>
 		</form>
