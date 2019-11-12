@@ -79,6 +79,7 @@ public class ArticleController {
 	@RequestMapping("/insert-comment")
 	public String insertComment(@Validated CommentForm commentForm,BindingResult result,RedirectAttributes redirectattributes,Model model) {
 		if(result.hasErrors()) {
+//			model.addAttribute("articleId",commentForm.getArticleId());
 			return index(model);
 		}
 		Comment comment = new Comment();

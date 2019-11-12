@@ -3,46 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
-	<h1>掲示板アプリケーション</h1>
+	<nav class="navbar navbar-dark bg-dark">
+	
+	
+		<div class="container"><p class="navbar-brand">BBS aplication</p></div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+	</nav>
+
+	<div class="container">
 	<div>
-		<form th:action="@{/article/insert}" method="post" th:object="${articleForm}">
-		<div th:errors="*{name}" style="color:red">エラー!</div>
-			投稿者名:<input type="text" name="name" th:field="*{name}"><br> 
-			<div th:errors="*{content}" style="color:red">エラー!</div>
-			投稿内容:<br>
-			<textarea rows="3" cols="30" name="content" th:field="*{content}"></textarea>
-			<br>
-			<button>記事投稿</button>
-		</form>
-		<hr>
+			<form th:action="@{/article/insert}" method="post" th:object="${articleForm}">
+				<div class="form-group my-3">
+					<label for="exampleInputEmail1">Name:</label>
+				    <div th:errors="*{name}" style="color:red">エラー!</div>
+					<input class="form-control" type="text" name="name" th:field="*{name}"><br>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Content:</label>
+					<div th:errors="*{content}" style="color:red">エラー!</div>
+					<textarea class="form-control"rows="3" cols="30" name="content" th:field="*{content}"></textarea>
+				</div>
+					<button type="submit" class="btn btn-outline-warning">POST</button>
+			</form>
+		
 		<hr>
 
 	</div>
 
 	<div th:each="article:${articles}">
-		投稿ID:<span th:text="${article.id}"></span><br> 
-		投稿者名:<span th:text="${article.name}"></span><br> 
-		投稿内容:<span th:text="${article.content}"></span><br>
+	
+	<div class="card my-2">
+	<div class="card-header">
+		<span th:text="${article.name}"></span><br> 
+  </div>
+	<div class="card-body">
+		ARTICLE ID: <span th:text="${article.id}"></span><br> 
+		CONTENT: <span th:text="${article.content}"></span><br>
 		
-		<a th:href="@{'/article/delete-article?id=' + ${article.id}}"><button>記事削除</button></a>
+		<a th:href="@{'/article/delete-article?id=' + ${article.id}}"><button class="btn btn-outline-danger">Delete</button></a>
 		<div th:each="comment:${article.commentList}">
 			名前:<span th:text="${comment.name}"></span><br>
 			コメント:<span th:text="${comment.content}"></span><br>
 		</div>
 		
 		<form th:action="@{/article/insert-comment}" method="post" th:object="${commentForm}">
-		<div th:errors="*{name}" style="color:red">エラー!</div>
-			名前:<input type="text" name="name" th:field="*{name}"><br>
-			<div th:errors="*{content}" style="color:red">エラー!</div>
-			コメント:<br>
-			<textarea rows="3" cols="55" name="content" th:field="*{content}"></textarea><br>
+		<div class="form-group">
+		<div th:if="${article.id}==${commentForm.articleId}" th:errors="*{name}" style="color:red">エラー!</div>
+			Name:<input class="form-control" type="text" name="name" th:field="*{name}">
+		</div>
+		<div class="form-group">	
+			<div th:if="${article.id}==${commentForm.articleId}" th:errors="*{content}" style="color:red">エラー!</div>
+			Comment:<br>
+			<textarea class="form-control" rows="3" cols="55" name="content" th:field="*{content}"></textarea><br>
 			<input type="hidden" name="articleId" th:value="${article.id}">
-			<button>コメント投稿</button>
+		</div>
+			<button class="btn btn-outline-success">Comment</button>
 		</form>
 		
-		<hr>
+		
+		</div>
+	</div>
+	</div>
 	</div>
 
 

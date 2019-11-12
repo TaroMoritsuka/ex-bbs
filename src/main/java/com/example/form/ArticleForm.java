@@ -14,6 +14,7 @@ public class ArticleForm {
 	/**記事内容*/
 	@NotBlank(message="投稿内容は必須です")
 	private String content;
+	
 	public String getName() {
 		return name;
 	}
